@@ -1,18 +1,55 @@
-test:
-  target: dev-pg
-  outputs:
-    teleport_config:
-      type: s3
-      bucket_name: best_bucket
+outputs:
+  - name: dev-pg
+    type: postgres
+    host: localhost
+    port: 5432
+    user: pguser
 
-    dev-pg:
+  - name: dev-py
+    type: fal
+    storage:
+      name: dev-pg
       type: postgres
       host: localhost
       port: 5432
       user: pguser
-      #...
 
-    python_engine:
-      type: spark
-      credentials: access_token
-      # ...
+  - name: dev-other-py
+    type: fal
+    storage:
+      target: dev-pg ## shorthand for line 10
+
+  # ..
+  
+target: dev-pg # This is the default target for this profile
+
+adapter-selectors:
+  - selector: model_A
+    adapter: dev-py
+  - selector: language:python
+    adapter: dev-py
+  - selector: tag:nightly
+    adapter: prod-sf
+  - selector: my_python_tree+
+    adapter: dev-py
+		exclude: ...
+
+teleport-config:
+  outputs:
+    - name: dev-data-share
+      type: s3
+      bucket: s3://
+      aws_key:
+      aws_secret:
+      service_account_json:
+      ...
+
+    - name: prod-data-share
+      type: s3
+      bucket: s3://
+      aws_key:
+      aws_secret:
+      service_account_json:
+      ...
+
+	default: dev-data-share

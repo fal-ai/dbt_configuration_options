@@ -1,5 +1,5 @@
 test:
-  target: dev-pg #    ***** SQL target
+  target: dev-pg
   outputs:
     dev-pg:
       type: postgres

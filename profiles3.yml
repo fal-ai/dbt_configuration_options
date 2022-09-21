@@ -1,16 +1,23 @@
 test:
-  target: dev-pg
+  target: dev-pg #    ***** SQL target
+  python_target: dev-py #    ***** python runtime target
+
   outputs:
     dev-pg:
       type: postgres
       host: localhost
       port: 5432
       user: pguser
-      #...
-    python_engine:
+      # ...
+
+  python_engines:
+    dev-py:
       type: spark
       credentials: ${access_token}
-      # ...
-      teleport_config:
-        type: s3
-        bucket_name: best_bucket
+      storage:
+        dev-pg:
+          type: postgres
+          host: localhost
+          port: 5432
+          user: pguser
+          # ...

@@ -8,7 +8,7 @@ test:
       port: 5432
       user: pguser
       # ...
-  python_engines:
+  python_engine:
     dev-py:
       type: spark
       credentials: access_token
