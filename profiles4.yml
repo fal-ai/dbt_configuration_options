@@ -1,0 +1,18 @@
+test:
+  target: dev-pg
+  outputs:
+    teleport_config:
+      type: s3
+      bucket_name: best_bucket
+
+    dev-pg:
+      type: postgres
+      host: localhost
+      port: 5432
+      user: pguser
+      #...
+
+    python_engine:
+      type: spark
+      credentials: access_token
+      # ...
